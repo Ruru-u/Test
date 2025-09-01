@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🍦 Ice Cream Order</title>
+</head>
+<body>
+  <h2>🍧 Build Your Ice Cream</h2>
+
+  <form name="iceForm">
+    <label for="flavor">Choose a Flavor:</label>
+    <select name="flavor" id="flavor">
+      <option value="50">Vanilla - ₱50</option>
+      <option value="60">Chocolate - ₱60</option>
+      <option value="70">Strawberry - ₱70</option>
+    </select>
+
+    <h3>Container:</h3>
+    <input type="radio" name="container" value="10"> Cone (+₱10)<br>
+    <input type="radio" name="container" value="5"> Cup (+₱5)<br>
+
+    <h3>Toppings (₱15 each):</h3>
+    <input type="checkbox" name="topping" value="15"> Sprinkles<br>
+    <input type="checkbox" name="topping" value="15"> Nuts<br>
+    <input type="checkbox" name="topping" value="15"> Chocolate Syrup<br>
+
+    <h3>Quantity:</h3>
+    <input type="number" name="qty" id="qty" value="1" min="1"><br><br>
+
+    <button type="button" onclick="placeOrder()">Place Order</button>
+  </form>
+
+  <div id="result" style="margin-top:20px;"></div>
+
+  <script>
+    function placeOrder(){
+        // Get flavor
+        let flavorSelect = document.getElementById("flavor");
+        let flavorText = flavorSelect.options[flavorSelect.selectedIndex].text;
+        let flavorPrice = parseFloat(flavorSelect.value);
+
+        // Get container
+        let containers = document.forms["iceForm"]["container"];
+        let containerText = "";
+        let containerPrice = 0;
+        if (containers.length === undefined) {
+            if (containers.checked) {
+                containerPrice = parseFloat(containers.value);
+                containerText = containers.nextSibling.textContent.trim();
+            }
+        } else {
+            for (let i = 0; i < containers.length; i++) {
+                if (containers[i].checked) {
+                    containerPrice = parseFloat(containers[i].value);
+                    containerText = containers[i].nextSibling.textContent.trim();
+                }
+            }
+        }
+
+        // Get toppings
+        let toppings = document.forms["iceForm"]["topping"];
+        let toppingList = [];
+        let toppingCount = 0;
+        if (toppings.length === undefined) {
+            if (toppings.checked) {
+                toppingList.push(toppings.nextSibling.textContent.trim());
+                toppingCount = 1;
+            }
+        } else {
+            for (let i = 0; i < toppings.length; i++) {
+                if (toppings[i].checked) {
+                    toppingList.push(toppings[i].nextSibling.textContent.trim());
+                    toppingCount++;
+                }
+            }
+        }
+        let toppingPrice = toppingCount * 15;
+
+        // Get quantity
+        let qty = parseInt(document.getElementById("qty").value) || 1;
+
+        // Calculate total
+        let singleTotal = flavorPrice + containerPrice + toppingPrice;
+        let total = singleTotal * qty;
+
+        // Build receipt
+        let receipt = `<h3>🍦 Order Receipt</h3>`;
+        receipt += `Flavor: ${flavorText}<br>`;
+        receipt += `Container: ${containerText}<br>`;
+        receipt += `Toppings: ${toppingList.length > 0 ? toppingList.join(", ") : "None"}<br>`;
+        receipt += `Quantity: ${qty}<br>`;
+        receipt += `Subtotal (per ice cream): ₱${singleTotal}<br>`;
+        receipt += `<strong>Total: ₱${total}</strong>`;
+
+        document.getElementById("result").innerHTML = receipt;
+    }
+  </script>
+</body>
+</html>

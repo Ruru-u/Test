@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🍔 Burger Order</title>
+</head>
+<body>
+  <h2>🍔 Build Your Burger</h2>
+
+  <form name="burgerForm">
+    <label for="burger">Choose a Burger:</label>
+    <select name="burger" id="burger">
+      <option value="80">Classic - ₱80</option>
+      <option value="100">Cheeseburger - ₱100</option>
+      <option value="120">Bacon Burger - ₱120</option>
+    </select>
+
+    <h3>Size:</h3>
+    <input type="radio" name="size" value="0"> Regular<br>
+    <input type="radio" name="size" value="30"> Large (+₱30)<br>
+
+    <h3>Add-ons (₱20 each):</h3>
+    <input type="checkbox" name="addon" value="20"> Fries<br>
+    <input type="checkbox" name="addon" value="20"> Soda<br>
+    <input type="checkbox" name="addon" value="20"> Nuggets<br>
+
+    <h3>Quantity:</h3>
+    <input type="number" id="quantity" name="quantity" min="1" value="1"><br><br>
+
+    <button type="button" onclick="placeBurgerOrder()">Place Order</button>
+  </form>
+
+  <div id="result" style="margin-top: 20px;"></div>
+
+  <script>
+    function placeBurgerOrder() {
+      // Get burger
+      let burgerSelect = document.getElementById("burger");
+      let burgerText = burgerSelect.options[burgerSelect.selectedIndex].text;
+      let burgerPrice = parseFloat(burgerSelect.value);
+
+      // Get size
+      let sizes = document.forms["burgerForm"]["size"];
+      let sizeText = "";
+      let sizePrice = 0;
+      if (sizes.length === undefined) {
+        if (sizes.checked) {
+          sizePrice = parseFloat(sizes.value);
+          sizeText = sizes.nextSibling.textContent.trim();
+        }
+      } else {
+        for (let i = 0; i < sizes.length; i++) {
+          if (sizes[i].checked) {
+            sizePrice = parseFloat(sizes[i].value);
+            sizeText = sizes[i].nextSibling.textContent.trim();
+          }
+        }
+      }
+
+      // Get add-ons
+      let addons = document.forms["burgerForm"]["addon"];
+      let addonList = [];
+      let addonCount = 0;
+      if (addons.length === undefined) {
+        if (addons.checked) {
+          addonList.push(addons.nextSibling.textContent.trim());
+          addonCount = 1;
+        }
+      } else {
+        for (let i = 0; i < addons.length; i++) {
+          if (addons[i].checked) {
+            addonList.push(addons[i].nextSibling.textContent.trim());
+            addonCount++;
+          }
+        }
+      }
+      let addonPrice = addonCount * 20;
+
+      // Get quantity
+      let qty = parseInt(document.getElementById("quantity").value) || 1;
+
+      // Calculate total
+      let singleTotal = burgerPrice + sizePrice + addonPrice;
+      let total = singleTotal * qty;
+
+      // Build receipt
+      let receipt = `<h3>🍔 Order Receipt</h3>`;
+      receipt += `Burger: ${burgerText}<br>`;
+      receipt += `Size: ${sizeText}<br>`;
+      receipt += `Add-ons: ${addonList.length > 0 ? addonList.join(", ") : "None"}<br>`;
+      receipt += `Quantity: ${qty}<br>`;
+      receipt += `Subtotal (per burger): ₱${singleTotal}<br>`;
+      receipt += `<strong>Total: ₱${total}</strong>`;
+
+      document.getElementById("result").innerHTML = receipt;
+    }
+  </script>
+</body>
+</html>
