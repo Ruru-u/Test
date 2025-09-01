@@ -1,0 +1,76 @@
+body{
+    background-color: wheat;
+}
+
+table, hd, td{
+            border: 1px solid rgb(7, 6, 6);
+            border-collapse: collapse;
+            padding: 5px;
+        }
+.Profile{
+    
+text-align: center;
+}
+.Bio{
+    text-align: center;
+    background-color: beige;
+    border-radius: 25px;
+  border: 2px solid #73AD21;
+  padding: 20px;
+  width: 1840px;
+  height: 150px;
+}
+.Skills{
+    
+    background-color: beige;
+    border-radius: 25px;
+  border: 2px solid #73AD21;
+  padding: 20px;
+  width: 1840px;
+  height: 150px;
+}
+.Education{
+    background-color: beige;
+    border-radius: 25px;
+  border: 2px solid #73AD21;
+  padding: 20px;
+  width: 1840px;
+  height: 150px;
+}
+.Contact{
+    background-color: beige;
+    border-radius: 25px;
+  border: 2px solid #73AD21;
+  padding: 20px;
+  width: 1840px;
+  height: 150px;
+  font-weight: bold;
+    
+}
+h1{
+    text-align: center;
+}
+h4{
+    font-size: larger;
+}
+img{
+    border: 1px solid rgb(10, 9, 10);
+    border-collapse: collapse;
+    padding: 10px;
+    border-radius: 50%;
+}
+th{
+    color: white;
+    background-color: gray;
+    
+}
+p{
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    font-size: large;
+}
+ul.c {
+    list-style-type: upper-roman;
+}
+li{
+    font-size: large;
+}

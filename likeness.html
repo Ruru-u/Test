@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>Reversed</h3>
+    <input type="text" id="sentence">
+    <button onclick="Reversed()">submit</button>
+    <div id="result"></div>
+
+    <h3>Reverse char</h3>
+    <input type="text" id="sen">
+    <button onclick="play()">submit</button>
+    <div id="rel"></div>
+
+    <h3>add Name</h3>
+    <input type="text" id="nameInput">
+    <button onclick="addName()">Submit</button>
+    <div id="nameResult"></div>
+    <div id="nameList"></div>
+
+    <h3>Pattern Generator</h3>
+    <input type="number" id="n" placeholder="Enter a number">
+    <button onclick="square()">Square</button>
+    <button onclick="triangle()">Triangle</button>
+    <button onclick="Trianglereverse()">Reverse Triangle</button>
+    <button onclick="Right()">RightTriangle</button>
+    <div id="results"></div>
+
+    <h3>Replace</h3>
+    <input type="text" id="se">
+    <button onclick="Replaced()">Convert</button>
+    <div id="out"></div>
+
+    <script>
+        function Reversed() {
+            const input = document.getElementById("sentence").value.trim();
+            const words = input.split(" ");
+            let reverse = words.reverse().join(" "); 
+
+            document.getElementById("result").innerHTML = `
+            <strong>Output:</strong> ${reverse} <br>
+            <b>Words Count:</b> ${words.length}
+            `;
+        }
+
+        function play(){
+            const inp = document.getElementById("sen").value.trim();
+            let word = inp.split(" ").reverse().join(" ");
+
+            document.getElementById("rel").innerHTML=`
+            <Strong> Output: </Strong> ${word} <br>
+            <b> Words Count: ${word.length}</b>
+            `;
+        }
+
+        let num = [];
+        function addName(){
+            const input = document.getElementById("nameInput").value.trim();
+            
+            if(input == ""){
+                document.getElementById("nameResult").innerHTML = "No input allowed";
+                return;
+            }
+
+            if(num.includes(input)){
+                document.getElementById("nameResult").innerHTML = "Name already Existed";
+            }else{
+                num.unshift(input);
+                document.getElementById("nameResult").innerHTML = "Name Successfully Added";
+                document.getElementById("nameList").innerHTML = num.join(", ");
+            }
+        }
+
+        function square(){
+            const n = parseInt(document.getElementById("n").value);
+            let output = "";
+
+            for(let j = 0; j < n ; j++){
+            output += "*".repeat(n) + "<br>";    
+            }
+            document.getElementById("results").innerHTML= output;
+        }
+
+        function triangle(){
+            const n = parseInt(document.getElementById("n").value);
+            let output = "";
+
+            for(let j = 1; j <=n ;j++){
+            output += "*".repeat(j) + "<br>";    
+            }
+            document.getElementById("results").innerHTML= output;
+        }
+
+        function Trianglereverse(){
+            const n = parseInt(document.getElementById("n").value);
+            let output = "";
+
+            for(let j = n; j >=1 ;j--){
+            output += "*".repeat(j) + "<br>";    
+            }
+            document.getElementById("results").innerHTML= output;
+        }
+        function Right(){
+            const n = parseInt(document.getElementById("n").value);
+            let output = "";
+
+            for(let j = 1; j <=n ;j++){
+            output +="&nbsp".repeat(n - j) + "*".repeat(j) + "<br>";    
+            }
+            document.getElementById("results").innerHTML= output;
+        }
+
+        function Replaced(){
+            const input = document.getElementById("se").value.trim();
+            const lowercase = input.toLowerCase();
+            const replace = lowercase.replace(/ /g, "-");
+            let words = replace.split(" ");
+            
+            document.getElementById("out").innerHTML=`
+            <Strong> Output: </Strong> ${replace} <br>
+            <b> Words Count: ${words.length}</b>
+            `;
+        }
+    </script>
+</body>
+</html>
